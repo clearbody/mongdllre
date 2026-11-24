@@ -120,7 +120,7 @@ footer{text-align:center;color:#aa9cbd;font-size:13px;margin-top:35px}
  <tr><td>장비수리권 (30%)</td><td>장비의 내구도를 30% 회복합니다.</td></tr>
  <tr><td>장비수리권 (50%)</td><td>장비의 내구도를 50% 회복합니다.</td></tr>
  <tr><td>인벤세이브</td><td>사망 시 인벤토리를 보호합니다.</td></tr>
- <tr><td>강화권</td><td>장비 및 방어구 강화에 사용됩니다.</td></tr>
+ <tr><td>강화권</td><td>장비 강화에 사용됩니다.</td></tr>
  <tr><td>하락방지권</td><td>장비 강화 시 하락을 방지합니다. 하락할 때만 소모됩니다.</td></tr>
  <tr><td>파괴방지권</td><td>장비 강화 시 파괴를 방지합니다. 파괴될 때만 소모됩니다.</td></tr>
  <tr><td>치장랜덤박스</td><td>치장 아이템을 무작위로 1개 획득합니다.</td></tr>
@@ -184,8 +184,7 @@ footer{text-align:center;color:#aa9cbd;font-size:13px;margin-top:35px}
 </section>
 
 <section class="page" id="rates">
- <div class="section"><h2>📊 장비 강화 확률</h2><p>각 강화 단계에서의 성공, 유지, 하락, 파괴 확률입니다.</p><div id="weaponRates"></div></div>
- <div class="section"><h2>🛡️ 방어구 강화 확률</h2><div id="armorRates"></div></div>
+ <div class="section"><h2>📊 장비 강화 확률</h2><p>각 강화 단계에서의 성공, 유지, 하락, 파괴 확률입니다.</p><div id="equipmentRates"></div></div>
 </section>
 
 <section class="page" id="rules">
@@ -212,13 +211,27 @@ tabs.forEach(tab=>tab.addEventListener('click',()=>{
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===tab.dataset.tab));
   window.scrollTo({top:document.querySelector('.tabs').offsetTop-12,behavior:'smooth'});
 }));
-const weapon=[
-[75,25,0,0],[60,34,5,1],[40,45,10,5],[20,55,15,10],[10,55,20,15],[5,50,25,20],[2.5,42.5,30,25],[1.2,35.8,33,30],[.8,29.2,35,35],[.6,19.4,40,40],[.3,14.7,40,45],[.2,4.8,45,50],[.1,4.9,45,50],[.05,4.95,45,50],[.05,4.95,45,50]];
-const armor=[
-[75,25,0,0],[60,34,5,1],[40,45,10,5],[20,55,15,10],[12,53,20,15],[7,48,25,20],[4,41,30,25],[1.5,35.5,33,30],[1,29,35,35],[.8,19.2,40,40],[.5,14.5,40,45],[.3,4.7,45,50],[.15,4.85,45,50],[.1,4.9,45,50],[.05,4.95,45,50]];
-function rateTable(data){return `<div class="table-wrap"><table><thead><tr><th>강화 수치</th><th>성공</th><th>유지</th><th>하락</th><th>파괴</th></tr></thead><tbody>${data.map((r,i)=>`<tr><td>${i+1}강</td>${r.map(v=>`<td>${v.toFixed(2)}%</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
-document.getElementById('weaponRates').innerHTML=rateTable(weapon);
-document.getElementById('armorRates').innerHTML=rateTable(armor);
+const equipment=[
+ [65,35,0,0],
+ [55,40,5,0],
+ [45,45,10,0],
+ [35,50,15,0],
+ [28,52,20,0],
+ [25,53,20,2],
+ [20,51,25,4],
+ [15,49,30,6],
+ [10,52,30,8],
+ [8,47,35,10],
+ [5,48,35,12],
+ [3,42,40,15],
+ [2,40,40,18],
+ [1,39,40,20],
+ [0.5,34.5,40,25]
+];
+function rateTable(data){
+ return `<div class="table-wrap"><table><thead><tr><th>도전</th><th>성공</th><th>유지</th><th>하락</th><th>파괴</th></tr></thead><tbody>${data.map((r,i)=>`<tr><td>${i}강화 → ${i+1}강화</td>${r.map(v=>`<td>${v.toFixed(1)}%</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
+}
+document.getElementById('equipmentRates').innerHTML=rateTable(equipment);
 </script>
 </body>
 </html>
